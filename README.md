@@ -21,6 +21,7 @@ Offline-first, local-language healthcare for rural communities. Works on low-cos
 - Repository structure (suggested)
 - Roadmap
 - Contributing
+- License
 - Medical disclaimer
 
 ---
@@ -83,7 +84,7 @@ With MediSpark you can:
 
 ## Architecture overview
 
-
+```
 [React Native App]
   ├─ Voice/Text UI (STT/TTS, local languages)
   ├─ Encrypted SQLite (SQLCipher or equivalent)
@@ -93,7 +94,7 @@ With MediSpark you can:
   │    └─ LogisticReg→ inventory forecast
   ├─ SMS Manager → Local SMS Gateway (HTTP/SMPP)
   └─ Sync Service → cloud/doctor portal (when online)
-
+```
 
 ---
 
@@ -108,37 +109,37 @@ Prerequisites
 
 Install and run
 1) Install dependencies
-
+```
 yarn install
-
+```
 
 2) Add models to app assets
-
+```
 app/assets/models/
   ├─ distilbert/           # tokenizer + weights
   ├─ mobilenet.tflite      # int8 quantized recommended
   └─ inventory.joblib      # logistic regression model
-
+```
 
 3) Add Pyodide runtime
-
+```
 app/assets/pyodide/
   ├─ pyodide.js
   ├─ pyodide.wasm
   └─ packages.json
-
+```
 
 4) Configure environment
 - Copy .env.example to .env and set:
-
+```
 SMS_GATEWAY_URL=http://<gateway-ip>:<port>/send
-
+```
 - The app generates an AES‑256 key on first run and stores it in Android Keystore.
 
 5) Run the app on Android
-
+```
 yarn android
-
+```
 
 Supported languages
 - English, Hindi, Tamil to start; easily extendable via language packs and TTS/STT voices.
@@ -153,13 +154,13 @@ Performance tips
 ## SMS setup
 
 - Outbound SMS: App calls the Local SMS Gateway HTTP endpoint:
-
+```
 POST ${SMS_GATEWAY_URL}
 {
   "to": "+91XXXXXXXXXX",
   "message": "Reminder: Diabetes check tomorrow at 10am. Reply 1 to confirm."
 }
-
+```
 
 - Inbound SMS: Configure gateway to POST callbacks to the app relay/server when online. The app can poll for pending inbound messages when connectivity returns.
 
@@ -181,7 +182,7 @@ POST ${SMS_GATEWAY_URL}
 
 ## Repository structure (suggested)
 
-
+```
 medi-spark/
 ├─ app/                     # React Native app
 │  ├─ src/
@@ -204,7 +205,7 @@ medi-spark/
 ├─ docs/
 │  └─ data-schema.sql
 └─ .env.example
-
+```
 
 ---
 
